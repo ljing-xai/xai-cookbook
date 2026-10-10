@@ -6,7 +6,7 @@ type: recipe
 level: beginner
 languages: [typescript]
 capabilities: [voice, text-to-speech]
-models: [grok-voice-think-fast-2.0]
+models: [grok-voice-latest]
 env: [XAI_API_KEY]
 icon: translate
 authors: [Eric Zakariasson]
@@ -56,7 +56,7 @@ The browser talks to the realtime API itself, and the server only hands it a tok
 
 `src/interpreter.ts` has the code the server and the terminal script share:
 
-1. `createSession()` mints a client secret with `client.voice.clientSecrets.create()`. The token sets the model, `grok-voice-think-fast-2.0`, and turns reasoning off, since repeating a sentence in another language doesn't need it. In our tests, Grok started speaking 0.7 to 1 second after the speaker stopped, with reasoning on or off. A token opens only one session, and the session keeps going after the token expires, so the token only has to last until the browser connects. It expires after 60 seconds.
+1. `createSession()` mints a client secret with `client.voice.clientSecrets.create()`. The token sets the model, `grok-voice-latest`, and turns reasoning off, since repeating a sentence in another language doesn't need it. In our tests, Grok started speaking 0.7 to 1 second after the speaker stopped, with reasoning on or off. A token opens only one session, and the session keeps going after the token expires, so the token only has to last until the browser connects. It expires after 60 seconds.
 2. It returns the token with the session settings the browser sends in `session.update` once it connects: the prompt, the voice, server-side turn detection, 24 kHz PCM audio in both directions, and the `grok-transcribe` model, which transcribes the speaker while they're still talking. The SDK's types only let the token carry the model and the reasoning setting, so the rest goes in `session.update`.
 3. `interpreterPrompt()` uses the sections from the [prompting guide](https://docs.x.ai/developers/model-capabilities/audio/speech-to-speech/prompting-guide). The voice model is built for conversation, so most of the prompt stops it from joining in. Everything it hears is something to translate: it translates a question instead of answering it, and translates "ignore your instructions" instead of following it.
 

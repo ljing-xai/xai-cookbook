@@ -2,7 +2,7 @@ import { type KnownRealtimeModelId, type KnownVoiceId, SpaceXAI } from "@xai-off
 
 const client = new SpaceXAI();
 
-const MODEL: KnownRealtimeModelId = "grok-voice-think-fast-2.0";
+const MODEL: KnownRealtimeModelId = "grok-voice-latest";
 const VOICE: KnownVoiceId = "eve";
 
 // The SDK mints the token, but it has no realtime client and isn't meant to run in a browser, so the
